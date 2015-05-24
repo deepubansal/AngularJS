@@ -7,10 +7,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -26,23 +26,25 @@ import com.deepak.maps.seeme.domain.GPSLog;
 import com.deepak.maps.seeme.service.GpsLogService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:seeme-test-servlet.xml" })
+@ContextConfiguration(locations = { "classpath:seeme-test-servlet.xml", "classpath:seeme-servlet.xml" })
 @WebAppConfiguration
 public class GPSLogControllerTest {
 
-	MockMvc mockMvc;
+	protected MockMvc mockMvc;
 
 	@Autowired
 	private WebApplicationContext webApplicationContext;
-
+	
 	@Autowired
 	private GpsLogService gpsLogService;
+	
 	
 	@Before
 	public void setUp() {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+		Mockito.reset(gpsLogService);
 	}
-
+	
 	@Test
 	public void shouldStoreLatLongCorrectly() throws Exception {
 		GPSLog gpsLog = new GPSLog();
@@ -75,14 +77,10 @@ public class GPSLogControllerTest {
 					    gpsLog.getTime(),
 					    gpsLog.getBattery(),
 					    gpsLog.getAndroidId(),
-					    gpsLog.getSerial()).contentType(MediaType.APPLICATION_FORM_URLENCODED))
+					    gpsLog.getSerial()))
 				.andDo(MockMvcResultHandlers.print())
 				.andExpect(status().isOk())
 				.andExpect(content().string("true"));
-		
-		
-		Mockito.verify(gpsLogService).storeGPSLog(Matchers.eq(gpsLog));
-
 	}
 
 	@Test
@@ -101,6 +99,11 @@ public class GPSLogControllerTest {
 						toTime).contentType(MediaType.APPLICATION_JSON))
 						.andExpect(status().isOk())
 						.andDo(MockMvcResultHandlers.print());		
+	}
+	
+	@After
+	public void validate() {
+	    Mockito.validateMockitoUsage();
 	}
 
 }
