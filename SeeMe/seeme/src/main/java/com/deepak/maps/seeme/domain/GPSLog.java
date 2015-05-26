@@ -1,5 +1,11 @@
 package com.deepak.maps.seeme.domain;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
+
 
 public class GPSLog {
 
@@ -12,7 +18,7 @@ public class GPSLog {
 	private String dir;
 	private String prov;
 	private String spd;
-	private Long time;
+	private String time;
 	private String battery;
 	private String androidId;
 	private String serial;
@@ -80,12 +86,22 @@ public class GPSLog {
 	public void setSpd(String spd) {
 		this.spd = spd;
 	}
-	public Long getTime() {
+	public Long getTimeAsLong() throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'",
+				Locale.US);
+		sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+		return sdf.parse(time).getTime();
+		
+	}
+	
+	public String getTime() {
 		return time;
 	}
-	public void setTime(Long l) {
-		this.time = l;
+	
+	public void setTime (String time) {
+		this.time = time;
 	}
+
 	public String getBattery() {
 		return battery;
 	}
@@ -201,5 +217,13 @@ public class GPSLog {
 		} else if (!time.equals(other.time))
 			return false;
 		return true;
+	}
+
+	public void setTimeFromLong(Long time) {
+		Date d = new Date(time);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'",
+				Locale.US);
+		sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+		this.time = sdf.format(d);
 	}
 }

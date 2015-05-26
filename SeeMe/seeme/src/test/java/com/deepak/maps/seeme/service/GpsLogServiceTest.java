@@ -1,5 +1,6 @@
 package com.deepak.maps.seeme.service;
 
+import java.text.ParseException;
 import java.util.Date;
 
 import org.junit.Before;
@@ -32,14 +33,14 @@ public class GpsLogServiceTest {
 	}
 	
 	@Test
-	public void testStoreGPSLogTest() {
+	public void testStoreGPSLogTest() throws ParseException {
 		GPSLog gpsLog = new GPSLog();
-		gpsLog.setTime(new Date().getTime());
+		gpsLog.setTimeFromLong(new Date().getTime());
 		Device device = new Device();
 		Mockito.when(deviceDao.findOneByAndroidId(null)).thenReturn(device);
 		gpsLogService.storeGPSLog(gpsLog);
 		GPSInfo gpsInfo = new GPSInfo();
-		gpsInfo.setTime(gpsLog.getTime());
+		gpsInfo.setTime(gpsLog.getTimeAsLong());
 		gpsInfo.setDevice(device);
 		Mockito.verify(gpsInfoDao, Mockito.times(1)).save(Mockito.eq(gpsInfo));
 	}

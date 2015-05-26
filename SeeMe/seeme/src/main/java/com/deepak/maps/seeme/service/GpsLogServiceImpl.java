@@ -1,5 +1,6 @@
 package com.deepak.maps.seeme.service;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import javax.transaction.Transactional;
@@ -30,7 +31,13 @@ public class GpsLogServiceImpl implements GpsLogService {
 	@Transactional
 	public void storeGPSLog(GPSLog gpsLog) {
 		logger.info("Inside GpsLogServiceImpl");
-		GPSInfo gpsInfo = new GPSInfo(gpsLog);
+		GPSInfo gpsInfo;
+		try {
+			gpsInfo = new GPSInfo(gpsLog);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
 		Device device = deviceDao.findOneByAndroidId(gpsLog.getAndroidId());
 		if (device == null) {
 			device = new Device();
