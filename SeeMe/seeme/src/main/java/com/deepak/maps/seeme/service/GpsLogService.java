@@ -2,8 +2,6 @@ package com.deepak.maps.seeme.service;
 
 import java.util.ArrayList;
 
-import javax.transaction.Transactional;
-
 import com.deepak.maps.seeme.domain.GPSLog;
 
 public interface GpsLogService {
