@@ -86,11 +86,11 @@ public class GPSLog {
 	public void setSpd(String spd) {
 		this.spd = spd;
 	}
-	public Long getTimeAsLong() throws ParseException {
+	public Date getTimeAsDate() throws ParseException {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'",
 				Locale.US);
 		sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-		return sdf.parse(time).getTime();
+		return sdf.parse(time);
 		
 	}
 	
@@ -219,8 +219,7 @@ public class GPSLog {
 		return true;
 	}
 
-	public void setTimeFromLong(Long time) {
-		Date d = new Date(time);
+	public void setTimeFromDate(Date d) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'",
 				Locale.US);
 		sdf.setTimeZone(TimeZone.getTimeZone("UTC"));

@@ -31,13 +31,6 @@ public class GPSLogController {
 		return true;
 	}
 	
-	@InitBinder
-	public void initBinder(WebDataBinder binder) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-		dateFormat.setLenient(false);
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
-	}
-	
 	@RequestMapping(consumes="application/json", produces="application/json", value="/get")
 	public ArrayList<GPSLog> getGPS(Long fromTime, Long toTime) {
 		return gpsLogService.getLogsByInterval(fromTime, toTime);

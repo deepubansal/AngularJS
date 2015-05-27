@@ -57,7 +57,7 @@ public class GPSLogControllerTest {
 		gpsLog.setDir("na");
 		gpsLog.setProv("na");
 		gpsLog.setSpd("10");
-		gpsLog.setTimeFromLong(new Date().getTime());
+		gpsLog.setTimeFromDate(new Date());
 		gpsLog.setBattery("44");
 		gpsLog.setAndroidId("androidid");
 		gpsLog.setSerial("serial"); 
@@ -86,7 +86,7 @@ public class GPSLogControllerTest {
 	@Test
 	public void shouldReturnLatLongCorrectly() throws Exception {
 		GPSLog gpsLog = new GPSLog();
-		gpsLog.setTimeFromLong(new Date().getTime());;
+		gpsLog.setTimeFromDate(new Date());
 		Long fromTime = new Date().getTime();
 		Long toTime = new Date().getTime();
 		ArrayList<GPSLog> gpsLogs = new ArrayList<GPSLog>();

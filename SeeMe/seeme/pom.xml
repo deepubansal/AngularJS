@@ -22,11 +22,11 @@
 
     <dependencies>
         <!-- Compile/runtime dependencies -->
-        <dependency>
+       <!--  <dependency>
             <groupId>com.google.appengine</groupId>
             <artifactId>appengine-api-1.0-sdk</artifactId>
             <version>1.9.20</version>
-        </dependency> 
+        </dependency>  -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
@@ -129,7 +129,7 @@
 		    <version>${spring.version}</version>
 		    <scope>test</scope>
 		</dependency>
-         <dependency>
+<!--          <dependency>
             <groupId>com.google.appengine</groupId>
             <artifactId>appengine-testing</artifactId>
             <version>1.9.20</version>
@@ -141,7 +141,7 @@
             <version>1.9.20</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
+ -->        <dependency>
         	<groupId>com.fasterxml.jackson.core</groupId>
         	<artifactId>jackson-databind</artifactId>
         	<version>2.1.2</version>
@@ -166,7 +166,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
+    <!--         <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <version>3.1</version>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -175,7 +175,7 @@
                     <target>1.7</target>
                 </configuration>
             </plugin>
-            <plugin>
+     -->        <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.4</version>
@@ -194,13 +194,13 @@
                 </configuration>
             </plugin>
 
-  	         <plugin>
+  	    <!--      <plugin>
                 <groupId>com.google.appengine</groupId>
                 <artifactId>appengine-maven-plugin</artifactId>
                 <version>1.9.20</version>
                 <configuration>
                     <enableJarClasses>false</enableJarClasses>
-                    <!-- Comment in the below snippet to bind to all IPs instead of just localhost -->
+         -->            <!-- Comment in the below snippet to bind to all IPs instead of just localhost -->
                     <!-- address>0.0.0.0</address>
                     <port>8080</port -->
                     <!-- Comment in the below snippet to enable local debugging with a remove debugger
@@ -208,8 +208,8 @@
                     <!-- jvmFlags>
                       <jvmFlag>-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n</jvmFlag>
                     </jvmFlags -->
-                 </configuration>
+            <!--      </configuration>
             </plugin>
-         </plugins>
+          --></plugins>
     </build>
 </project>

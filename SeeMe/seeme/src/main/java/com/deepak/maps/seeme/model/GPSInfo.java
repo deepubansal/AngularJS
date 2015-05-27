@@ -1,6 +1,7 @@
 package com.deepak.maps.seeme.model;
 
 import java.text.ParseException;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -25,7 +26,7 @@ public class GPSInfo {
 	private String dir;
 	private String prov;
 	private String spd;
-	private Long time;
+	private Date time;
 	private String battery;
 
 	private Device device;
@@ -55,7 +56,7 @@ public class GPSInfo {
 		this.dir = gpsLog.getDir();
 		this.prov = gpsLog.getProv();
 		this.spd = gpsLog.getSpd();
-		this.time = gpsLog.getTimeAsLong();
+		this.time = gpsLog.getTimeAsDate();
 		this.battery = gpsLog.getBattery();		
 	}
 
@@ -139,11 +140,11 @@ public class GPSInfo {
 		this.spd = spd;
 	}
 
-	public Long getTime() {
+	public Date getTime() {
 		return time;
 	}
 
-	public void setTime(Long l) {
+	public void setTime(Date l) {
 		this.time = l;
 	}
 

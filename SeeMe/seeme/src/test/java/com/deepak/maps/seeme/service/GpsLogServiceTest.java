@@ -35,12 +35,12 @@ public class GpsLogServiceTest {
 	@Test
 	public void testStoreGPSLogTest() throws ParseException {
 		GPSLog gpsLog = new GPSLog();
-		gpsLog.setTimeFromLong(new Date().getTime());
+		gpsLog.setTimeFromDate(new Date());
 		Device device = new Device();
 		Mockito.when(deviceDao.findOneByAndroidId(null)).thenReturn(device);
 		gpsLogService.storeGPSLog(gpsLog);
 		GPSInfo gpsInfo = new GPSInfo();
-		gpsInfo.setTime(gpsLog.getTimeAsLong());
+		gpsInfo.setTime(gpsLog.getTimeAsDate());
 		gpsInfo.setDevice(device);
 		Mockito.verify(gpsInfoDao, Mockito.times(1)).save(Mockito.eq(gpsInfo));
 	}
