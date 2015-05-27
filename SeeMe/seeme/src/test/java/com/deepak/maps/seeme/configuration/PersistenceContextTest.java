@@ -25,7 +25,7 @@ public class PersistenceContextTest extends BaseTest {
 		Query query = entityManager.createNativeQuery("select curtime() from dual");
 		List list = query.getResultList();
 		String currentTimeAsStringActual = list.get(0).toString();
-		DateFormat df = new SimpleDateFormat("kk:mm:ss");
+		DateFormat df = new SimpleDateFormat("HH:mm:ss");
 		String currentTimeAsStringExpected = df.format(new Date());
 		Assert.assertEquals(currentTimeAsStringExpected, currentTimeAsStringActual);
 	}

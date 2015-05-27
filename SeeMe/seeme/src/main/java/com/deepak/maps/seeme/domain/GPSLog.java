@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import com.deepak.maps.seeme.model.GPSInfo;
+
 
 public class GPSLog {
 
@@ -23,6 +25,24 @@ public class GPSLog {
 	private String androidId;
 	private String serial;
 	
+	public GPSLog(GPSInfo gpsInfo) {
+		this.lat = gpsInfo.getLat();
+		this.lon = gpsInfo.getLon();
+		this.sat = gpsInfo.getSat();
+		this.desc = gpsInfo.getDescription();
+		this.alt = gpsInfo.getAlt();
+		this.acc = gpsInfo.getAcc();
+		this.dir = gpsInfo.getDir();
+		this.prov = gpsInfo.getProv();
+		this.spd = gpsInfo.getSpd();
+		setTimeFromDate(gpsInfo.getTime());
+		this.battery = gpsInfo.getBattery();		
+
+	}
+
+	public GPSLog() {
+	}
+
 	@Override
 	public String toString() {
 		return "GPSInfo [lat=" + lat + ", lon=" + lon + ", sat=" + sat
