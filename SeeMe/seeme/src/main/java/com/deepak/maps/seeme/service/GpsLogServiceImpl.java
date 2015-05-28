@@ -75,7 +75,8 @@ public class GpsLogServiceImpl implements GpsLogService {
 				}
 			}
 		});
+		logger.debug("GPS Logs retrieved from DB: {}", gpsLogs.toString());
 		return gpsLogs;
 	}
-
+	
 }

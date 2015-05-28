@@ -22,10 +22,10 @@ public class PersistenceContextTest extends BaseTest {
 	@SuppressWarnings("rawtypes")
 	@Test
 	public void testEntityManagerFactory() {
-		Query query = entityManager.createNativeQuery("select curtime() from dual");
+		Query query = entityManager.createNativeQuery("select UTC_TIMESTAMP() from dual");
 		List list = query.getResultList();
 		String currentTimeAsStringActual = list.get(0).toString();
-		DateFormat df = new SimpleDateFormat("HH:mm:ss");
+		DateFormat df = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss.0");
 		String currentTimeAsStringExpected = df.format(new Date());
 		Assert.assertEquals(currentTimeAsStringExpected, currentTimeAsStringActual);
 	}

@@ -57,7 +57,11 @@ public class GPSInfo {
 		this.prov = gpsLog.getProv();
 		this.spd = gpsLog.getSpd();
 		this.time = gpsLog.getTimeAsDate();
-		this.battery = gpsLog.getBattery();		
+		this.battery = gpsLog.getBattery();	
+		Device dev = new Device();
+		dev.setAndroidId(gpsLog.getAndroidId());
+		dev.setSerialNo(gpsLog.getSerial());
+		this.device =  dev;
 	}
 
 	@Override

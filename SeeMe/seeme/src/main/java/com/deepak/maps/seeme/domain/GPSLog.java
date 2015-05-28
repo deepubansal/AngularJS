@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import com.deepak.maps.seeme.model.Device;
 import com.deepak.maps.seeme.model.GPSInfo;
 
 
@@ -37,7 +38,9 @@ public class GPSLog {
 		this.spd = gpsInfo.getSpd();
 		setTimeFromDate(gpsInfo.getTime());
 		this.battery = gpsInfo.getBattery();		
-
+		Device device = gpsInfo.getDevice();
+		this.androidId = device.getAndroidId();
+		this.serial = device.getSerialNo();
 	}
 
 	public GPSLog() {

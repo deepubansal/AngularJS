@@ -55,9 +55,11 @@ public class GpsLogServiceTest {
 		Long toTime = new Date().getTime() + 1000;
 		GPSLog gpsLog1 = new GPSLog();
 		gpsLog1.setAcc("2.3");
+		gpsLog1.setSerial("s1");
 		gpsLog1.setTimeFromDate(new Date(fromTime));
 		GPSLog gpsLog2 = new GPSLog();
 		gpsLog2.setAcc("1.3");
+		gpsLog2.setSerial("s2");
 		gpsLog2.setTimeFromDate(new Date(toTime));
 		List<GPSLog> gpsLogs = new ArrayList<GPSLog>(2);
 		gpsLogs.add(gpsLog1);
