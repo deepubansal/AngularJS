@@ -1,6 +1,5 @@
 package com.deepak.maps.seeme.service;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -33,16 +32,17 @@ public class GpsLogServiceImpl implements GpsLogService {
 	@Autowired
 	private GPSInfoDao gpsInfoDao;
 
+	@Autowired
+	private LatestGpsInfoHolder latestGpsInfoHolder;
+
 	@Override
 	@Transactional
 	public void storeGPSLog(GPSLog gpsLog) {
 		logger.info("Inside GpsLogServiceImpl");
 		GPSInfo gpsInfo;
-		try {
-			gpsInfo = new GPSInfo(gpsLog);
-		} catch (ParseException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
+		gpsInfo = new GPSInfo(gpsLog);
+		if (gpsInfo.getTime() == null) {
+			throw new RuntimeException("Log without timestamp is not allowed");
 		}
 		Device device = deviceDao.findOneByAndroidId(gpsLog.getAndroidId());
 		if (device == null) {
@@ -58,7 +58,7 @@ public class GpsLogServiceImpl implements GpsLogService {
 	@Override
 	public List<GPSLog> getLogsByInterval(Long fromTime, Long toTime) {
 		Set<GPSInfo> gpsInfos = gpsInfoDao.findByTimeBetween(new Date(fromTime), new Date(toTime));
-		
+
 		List<GPSLog> gpsLogs = new ArrayList<GPSLog>(gpsInfos.size());
 		for (Iterator<GPSInfo> itr = gpsInfos.iterator(); itr.hasNext();) {
 			GPSInfo gpsInfo = itr.next();
@@ -67,16 +67,11 @@ public class GpsLogServiceImpl implements GpsLogService {
 		Collections.sort(gpsLogs, new Comparator<GPSLog>() {
 			@Override
 			public int compare(GPSLog o1, GPSLog o2) {
-				try {
-					return o1.getTimeAsDate().compareTo(o2.getTimeAsDate());
-				} catch (ParseException e) {
-					e.printStackTrace();
-					return 0;
-				}
+				return o1.getTimeAsDate().compareTo(o2.getTimeAsDate());
 			}
 		});
 		logger.debug("GPS Logs retrieved from DB: {}", gpsLogs.toString());
 		return gpsLogs;
 	}
-	
+
 }

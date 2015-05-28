@@ -109,11 +109,16 @@ public class GPSLog {
 	public void setSpd(String spd) {
 		this.spd = spd;
 	}
-	public Date getTimeAsDate() throws ParseException {
+	public Date getTimeAsDate() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'",
 				Locale.US);
 		sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-		return sdf.parse(time);
+		try {
+			return sdf.parse(time);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
 		
 	}
 	

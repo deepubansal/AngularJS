@@ -1,6 +1,5 @@
 package com.deepak.maps.seeme.model;
 
-import java.text.ParseException;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -46,7 +45,7 @@ public class GPSInfo {
 		super();
 	}
 
-	public GPSInfo(GPSLog gpsLog) throws ParseException {
+	public GPSInfo(GPSLog gpsLog) {
 		this.lat = gpsLog.getLat();
 		this.lon = gpsLog.getLon();
 		this.sat = gpsLog.getSat();
