@@ -6,13 +6,18 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import javax.validation.constraints.NotNull;
+
 import com.deepak.maps.seeme.model.Device;
 import com.deepak.maps.seeme.model.GPSInfo;
 
 
 public class GPSLog {
 
+	@NotNull
 	private Double lat;
+	
+	@NotNull
 	private Double lon;
 	private Integer sat;
 	private String desc;
@@ -21,9 +26,16 @@ public class GPSLog {
 	private String dir;
 	private String prov;
 	private String spd;
+	
+	@NotNull
 	private String time;
+
 	private String battery;
+
+	@NotNull
 	private String androidId;
+	
+	@NotNull
 	private String serial;
 	
 	public GPSLog(GPSInfo gpsInfo) {

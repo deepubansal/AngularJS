@@ -1,5 +1,7 @@
 package com.deepak.maps.seeme;
 
+import java.util.TimeZone;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -32,6 +34,8 @@ public class BaseTest {
 	@Before
 	public void setUp() {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+    	TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+
 	}
 
 	@Test

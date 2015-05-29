@@ -8,9 +8,11 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -22,7 +24,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.deepak.maps.seeme.DataMother;
 import com.deepak.maps.seeme.domain.GPSLog;
+import com.deepak.maps.seeme.domain.GetGpsInfoRequest;
 import com.deepak.maps.seeme.service.GpsLogService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -37,12 +41,14 @@ public class GPSLogControllerTest {
 	
 	@Autowired
 	private GpsLogService gpsLogService;
-	
+
+	private DataMother dataMother;
 	
 	@Before
 	public void setUp() {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 		Mockito.reset(gpsLogService);
+		dataMother = new DataMother();
 	}
 	
 	@Test
@@ -91,14 +97,20 @@ public class GPSLogControllerTest {
 		Long toTime = new Date().getTime();
 		ArrayList<GPSLog> gpsLogs = new ArrayList<GPSLog>();
 		gpsLogs.add(gpsLog);
-		Mockito.when(gpsLogService.getLogsByInterval(fromTime, toTime)).thenReturn(gpsLogs);
+		GetGpsInfoRequest getGpsInfoRequest = dataMother.createGetGpsInfoReqeust(fromTime, toTime);
+		Mockito.when(gpsLogService.getLogs(Mockito.eq(getGpsInfoRequest))).thenReturn(gpsLogs);
 		mockMvc.perform(
 				get("/gpslog/get?fromTime={TIME}&"
-						+ "toTime={BATT}",
+						+ "toTime={BATT}&deviceId={DEVID}",
 						fromTime,
-						toTime).contentType(MediaType.APPLICATION_JSON))
+						toTime,
+						getGpsInfoRequest.getDeviceId()).contentType(MediaType.APPLICATION_JSON))
 						.andExpect(status().isOk())
-						.andDo(MockMvcResultHandlers.print());		
+						.andDo(MockMvcResultHandlers.print());
+		ArgumentCaptor<GetGpsInfoRequest>  argument = ArgumentCaptor.forClass(GetGpsInfoRequest.class);
+		
+		Mockito.verify(gpsLogService, Mockito.times(1)).getLogs(argument.capture());
+		Assert.assertEquals(getGpsInfoRequest.getDeviceId(),argument.getValue().getDeviceId());
 	}
 	
 	@After

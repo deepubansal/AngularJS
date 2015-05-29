@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 import com.deepak.maps.seeme.dao.DeviceDao;
 import com.deepak.maps.seeme.dao.GPSInfoDao;
 import com.deepak.maps.seeme.domain.GPSLog;
+import com.deepak.maps.seeme.domain.GetGpsInfoRequest;
 import com.deepak.maps.seeme.model.Device;
 import com.deepak.maps.seeme.model.GPSInfo;
 
@@ -51,26 +52,52 @@ public class GpsLogServiceImpl implements GpsLogService {
 			device.setSerialNo(gpsLog.getSerial());
 			device = deviceDao.save(device);
 		}
+		latestGpsInfoHolder.updateIfNew(gpsLog, device.getId());
 		gpsInfo.setDevice(device);
 		gpsInfoDao.save(gpsInfo);
 	}
 
 	@Override
-	public List<GPSLog> getLogsByInterval(Long fromTime, Long toTime) {
-		Set<GPSInfo> gpsInfos = gpsInfoDao.findByTimeBetween(new Date(fromTime), new Date(toTime));
-
-		List<GPSLog> gpsLogs = new ArrayList<GPSLog>(gpsInfos.size());
-		for (Iterator<GPSInfo> itr = gpsInfos.iterator(); itr.hasNext();) {
-			GPSInfo gpsInfo = itr.next();
-			gpsLogs.add(new GPSLog(gpsInfo));
-		}
-		Collections.sort(gpsLogs, new Comparator<GPSLog>() {
-			@Override
-			public int compare(GPSLog o1, GPSLog o2) {
-				return o1.getTimeAsDate().compareTo(o2.getTimeAsDate());
+	public List<GPSLog> getLogs(GetGpsInfoRequest getGpsInfoRequest) {
+		Long fromTime = getGpsInfoRequest.getFromTime();
+		Long toTime = getGpsInfoRequest.getToTime();
+		List<GPSLog> gpsLogs = null;
+		Long deviceId = getGpsInfoRequest.getDeviceId();
+		Device deviceFromRequest = new Device();
+		deviceFromRequest.setId(deviceId);
+		if (fromTime != null || toTime != null) {
+			if (fromTime == null) {
+				fromTime = 0l;
+			} else if (toTime == 0) {
+				toTime = new Date().getTime();
 			}
-		});
-		logger.debug("GPS Logs retrieved from DB: {}", gpsLogs.toString());
+			Date fromDate = new Date(fromTime);
+			Date toDate = new Date(toTime);
+			logger.info("Finding logs between {} and {} for deviceID {}", fromDate, toDate, deviceId);
+
+			Set<GPSInfo> gpsInfos = gpsInfoDao.findByDeviceAndTimeBetween(deviceFromRequest, fromDate, toDate);
+			gpsLogs = new ArrayList<GPSLog>(gpsInfos.size());
+			for (Iterator<GPSInfo> itr = gpsInfos.iterator(); itr.hasNext();) {
+				GPSInfo gpsInfo = itr.next();
+				gpsLogs.add(new GPSLog(gpsInfo));
+			}
+			logger.debug("GPS Logs retrieved from DB: {}", gpsLogs.toString());
+			Collections.sort(gpsLogs, new Comparator<GPSLog>() {
+				@Override
+				public int compare(GPSLog o1, GPSLog o2) {
+					return o1.getTimeAsDate().compareTo(o2.getTimeAsDate());
+				}
+			});
+		} else {
+			gpsLogs = new ArrayList<GPSLog>(1);
+			GPSLog latest = latestGpsInfoHolder.fetchLatest(deviceId);
+			if (latest == null) {
+				GPSInfo latestGpsInfoByDevice = gpsInfoDao.findLatestGpsInfoByDevice(deviceFromRequest);
+				latest = new GPSLog(latestGpsInfoByDevice);
+				latestGpsInfoHolder.updateIfNew(latest, deviceId);
+			}
+			gpsLogs.add(latest);
+		}
 		return gpsLogs;
 	}
 

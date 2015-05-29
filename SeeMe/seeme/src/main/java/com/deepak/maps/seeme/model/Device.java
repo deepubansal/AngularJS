@@ -11,7 +11,7 @@ import javax.persistence.OneToMany;
 @Entity
 public class Device {
 
-	private Integer id;
+	private Long id;
 	private String androidId;
 	private String serialNo;
 
@@ -19,11 +19,11 @@ public class Device {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 	
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
