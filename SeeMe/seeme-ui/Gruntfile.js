@@ -9,6 +9,8 @@
 
 module.exports = function (grunt) {
 
+  grunt.loadNpmTasks('grunt-connect-proxy');
+
   // Load grunt tasks automatically
   require('load-grunt-tasks')(grunt);
 
@@ -20,6 +22,7 @@ module.exports = function (grunt) {
     app: require('./bower.json').appPath || 'app',
     // dist: 'dist'
     dist: '../seeme/src/main/webapp/ui'
+    // dist: '/home/deepak/Softwares/Work/apache-tomcat-7.0.42/webapps/seeme-1.0-SNAPSHOT/ui'
   };
 
   // Define the configuration for all the tasks
@@ -72,20 +75,37 @@ module.exports = function (grunt) {
         hostname: 'localhost',
         livereload: 35729
       },
+      proxies: [{
+         context: '/rest/', // the api pattern you need to proxy(i am going to proxyall the requests that are having a path as /rest)
+         host: 'localhost', // the backend server host ip
+         port: 8181, // the backend server port
+         rewrite: {
+            '^/rest': '/seeme-1.0-SNAPSHOT/rest'
+          }
+       }],
       livereload: {
         options: {
           open: true,
-          middleware: function (connect) {
-            return [
-              connect.static('.tmp'),
-              connect().use(
-                '/bower_components',
-                connect.static('./bower_components')
-              ),
-              connect.static(appConfig.app)
-            ];
+          middleware: function (connect, options) {
+              var middlewares = [];
+              if (!Array.isArray(options.base)) {
+                  options.base = [options.base];
+              }
+
+              // Setup the proxy
+              middlewares.push(require('grunt-connect-proxy/lib/utils').proxyRequest);
+
+              // Serve static files
+              options.base.forEach(function(base) {
+                 middlewares.push(connect.static(base));
+              });
+              middlewares.push(connect.static('.tmp'));
+              middlewares.push(connect().use('/bower_components',
+                connect.static('./bower_components')));
+              middlewares.push(connect.static(appConfig.app));
+              return middlewares;
+            }
           }
-        }
       },
       test: {
         options: {
@@ -365,6 +385,7 @@ module.exports = function (grunt) {
       'clean:server',
       'wiredep',
       'concurrent:server',
+      'configureProxies:server',
       'autoprefixer',
       'connect:livereload',
       'watch'

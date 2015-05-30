@@ -8,5 +8,8 @@
  * Controller of the seeMeApp
  */
 angular.module('seeMeApp')
-  .controller('MainCtrl', function ($scope) {
-  });
+  .controller('MainCtrl', ['$scope', 'GpsLogService', function ($scope, GpsLogService) {
+    GpsLogService.getLatestLog(1).then (function (data) {
+      console.log(data);
+    });
+  }]);
