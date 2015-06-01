@@ -68,7 +68,8 @@ public class GpsLogServiceImpl implements GpsLogService {
 		if (fromTime != null || toTime != null) {
 			if (fromTime == null) {
 				fromTime = 0l;
-			} else if (toTime == 0) {
+			}
+			if (toTime == null) {
 				toTime = new Date().getTime();
 			}
 			Date fromDate = new Date(fromTime);
@@ -90,6 +91,7 @@ public class GpsLogServiceImpl implements GpsLogService {
 			});
 		} else {
 			gpsLogs = new ArrayList<GPSLog>(1);
+			logger.info("Finding latest GPS information.");
 			GPSLog latest = latestGpsInfoHolder.fetchLatest(deviceId);
 			if (latest == null) {
 				GPSInfo latestGpsInfoByDevice = gpsInfoDao.findLatestGpsInfoByDevice(deviceFromRequest);

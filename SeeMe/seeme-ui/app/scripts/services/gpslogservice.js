@@ -14,10 +14,13 @@ angular.module('seeMeApp')
       getLatestLog : function (deviceId) {
            return $http.get(base + 'gpslog/get', { params: { deviceId : deviceId } });
          },
-      getLogSince : function (deviceId, fromTime) {
+      getLogsSince : function (deviceId, fromTime) {
           return $http.get(base + 'gpslog/get',{ params: { deviceId : deviceId, fromTime : fromTime } });
         },
-      getLogForInterval : function (deviceId, fromTime, toTime) {
+      getLogsTill : function (deviceId, toTime) {
+          return $http.get(base + 'gpslog/get',{ params: { deviceId : deviceId, toTime : toTime } });
+        },
+      getLogsForInterval : function (deviceId, fromTime, toTime) {
           return $http.get(base + 'gpslog/get', { params: { deviceId: deviceId, fromTime : fromTime, toTime : toTime } });
         }
       };

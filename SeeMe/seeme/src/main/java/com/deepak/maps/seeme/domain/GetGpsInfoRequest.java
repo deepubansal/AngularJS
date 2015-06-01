@@ -4,6 +4,10 @@ import javax.validation.constraints.NotNull;
 
 public class GetGpsInfoRequest {
 	
+	@Override
+	public String toString() {
+		return "GpsInfoRequest [fromTime=" + fromTime + ", toTime=" + toTime + ", deviceId=" + deviceId + "]";
+	}
 	private Long fromTime;
 	private Long toTime;
 	

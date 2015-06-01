@@ -31,6 +31,7 @@ public class GPSLogController {
 	
 	@RequestMapping(produces="application/json", value="/get")
 	public List<GPSLog> getGPS(@Valid GetGpsInfoRequest gpsInfoRequest) {
+		logger.debug("Received GPS Information Request: " + gpsInfoRequest);
 		return gpsLogService.getLogs(gpsInfoRequest);
 	}
 	
