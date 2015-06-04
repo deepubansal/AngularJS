@@ -16,7 +16,7 @@ angular
   ])
   .config(function($routeProvider) {
     $routeProvider
-      .when('/', {
+      .when('/:deviceId', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })

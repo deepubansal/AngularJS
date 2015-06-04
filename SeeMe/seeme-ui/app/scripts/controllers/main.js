@@ -8,8 +8,8 @@
  * Controller of the seeMeApp
  */
 angular.module('seeMeApp')
-  .controller('MainCtrl', ['$scope', '$interval', '$timeout', 'GpsLogService', 'ConfigService',
-      'UtilityService', function ($scope, $interval, $timeout, GpsLogService, ConfigService, UtilityService) {
+  .controller('MainCtrl', ['$scope', '$interval', '$timeout', '$routeParams', 'GpsLogService', 'ConfigService',
+      'UtilityService', function ($scope, $interval, $timeout, $routeParams, GpsLogService, ConfigService, UtilityService) {
 
     var marker = new google.maps.Marker({
         icon: ConfigService.icon,
@@ -24,21 +24,23 @@ angular.module('seeMeApp')
       };
 
     $scope.lastLocationTime = 0;
-    $interval(function () {
-          GpsLogService.getLatestLog(1).success (function (logs) {
-            var lastGpsData = logs[0];
-            if (lastGpsData.timeAsDate !==  $scope.lastLocationTime) {
-              $scope.lastLocationTime = lastGpsData.timeAsDate;
-              $scope.addNewCoordinate(lastGpsData);
-            }
-          });
-        }, 10000);
-    $scope.timeAgo = ""; // initialise the time variable
-    $scope.tickInterval = 1000 //ms
-    var tick = function() {
-        $scope.timeAgo = UtilityService.timeSince(new Date($scope.lastLocationTime)); // get the current time
-        $timeout(tick, $scope.tickInterval); // reset the timer
+    var deviceId = parseInt($routeParams.deviceId);
+    if (deviceId != undefined && typeof deviceId == typeof 1) {
+      $interval(function () {
+            GpsLogService.getLatestLog(deviceId).success (function (logs) {
+              var lastGpsData = logs[0];
+              if (lastGpsData.timeAsDate !==  $scope.lastLocationTime) {
+                $scope.lastLocationTime = lastGpsData.timeAsDate;
+                $scope.addNewCoordinate(lastGpsData);
+              }
+            });
+          }, 2000);
+      $scope.timeAgo = ""; // initialise the time variable
+      $scope.tickInterval = 1000 //ms
+      var tick = function() {
+          $scope.timeAgo = UtilityService.timeSince(new Date($scope.lastLocationTime)); // get the current time
+          $timeout(tick, $scope.tickInterval); // reset the timer
+      }
+      $timeout(tick, $scope.tickInterval);
     }
-    $timeout(tick, $scope.tickInterval);
-
   }]);
