@@ -26,15 +26,20 @@ angular.module('seeMeApp')
     $scope.lastLocationTime = 0;
     var deviceId = parseInt($routeParams.deviceId);
     if (deviceId != undefined && typeof deviceId == typeof 1) {
-      $interval(function () {
-            GpsLogService.getLatestLog(deviceId).success (function (logs) {
-              var lastGpsData = logs[0];
-              if (lastGpsData.timeAsDate !==  $scope.lastLocationTime) {
-                $scope.lastLocationTime = lastGpsData.timeAsDate;
-                $scope.addNewCoordinate(lastGpsData);
-              }
-            });
-          }, 2000);
+      var latestLogPoller = function () {
+            GpsLogService.getLatestLog(deviceId)
+                .success (function (logs) {
+                    var lastGpsData = logs[0];
+                    if (lastGpsData.timeAsDate !==  $scope.lastLocationTime) {
+                      $scope.lastLocationTime = lastGpsData.timeAsDate;
+                      $scope.addNewCoordinate(lastGpsData);
+                    }
+                    $timeout(latestLogPoller, 2000);
+                }).error(function(data, status, headers, config) {
+                    $timeout(latestLogPoller, 10);
+                });
+          };
+      latestLogPoller();
       $scope.timeAgo = ""; // initialise the time variable
       $scope.tickInterval = 1000 //ms
       var tick = function() {

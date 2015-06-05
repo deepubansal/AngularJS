@@ -12,7 +12,7 @@ angular.module('seeMeApp')
     var base = ConfigService.baseURL;
     return {
       getLatestLog : function (deviceId) {
-           return $http.get(base + 'gpslog/get', { params: { deviceId : deviceId } });
+           return $http.get(base + 'gpslog/get', { params: { deviceId : deviceId }, timeout: 5000 });
          },
       getLogsSince : function (deviceId, fromTime) {
           return $http.get(base + 'gpslog/get',{ params: { deviceId : deviceId, fromTime : fromTime } });
