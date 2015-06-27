@@ -1,9 +1,10 @@
 
 <div>
- <map center="{{pathCoordinates[pathCoordinates.length - 1]}}" zoom="15">
+ <map ng-show="pathCoordinates.length > 0" center="{{pathCoordinates[pathCoordinates.length - 1]}}" zoom="15">
     <shape ng-if="pathCoordinates.length > 0" name="polyline" path="{{pathCoordinates}}" geodesic="true"
     stroke-color="#FF0000" stroke-opacity="1.0" stroke-weight="2"> </shape>
 
 </map>
 <span ng-if="timeAgo.length > 0"> Last updated {{timeAgo}} ago !</span>
+<standardInterval> </standardInterval>
 </div>

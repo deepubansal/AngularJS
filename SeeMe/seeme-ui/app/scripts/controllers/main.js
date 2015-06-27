@@ -18,9 +18,10 @@ angular.module('seeMeApp')
 
     $scope.pathCoordinates = [];
     $scope.addNewCoordinate = function(newLog) {
-        marker.setMap($scope.map);
-        marker.setPosition({lat:newLog.lat, lng:newLog.lon});
         $scope.pathCoordinates.push([newLog.lat, newLog.lon]);
+        marker.setPosition({lat:newLog.lat, lng:newLog.lon});
+        if ($scope.pathCoordinates.length == 1)
+          marker.setMap($scope.map);
       };
 
     $scope.lastLocationTime = 0;

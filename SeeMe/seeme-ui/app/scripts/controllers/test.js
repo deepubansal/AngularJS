@@ -10,30 +10,31 @@
 angular.module('seeMeApp')
   .controller('TestCtrl', ['$scope', '$interval', 'GpsLogService', 'ConfigService', function ($scope, $interval, GpsLogService, ConfigService) {
     $scope.pathCoordinates = [];
-     $scope.addNewCoordinate = function(newLog) {
+
+    var marker = new google.maps.Marker({
+        icon: ConfigService.icon,
+        title: 'My Location'
+    });
+
+    $scope.addNewCoordinate = function(newLog) {
+        marker.setPosition({lat:newLog.lat, lng:newLog.lon});
         $scope.pathCoordinates.push([newLog.lat, newLog.lon]);
       };
 
-    var toTime = new Date().getTime();
-    // var toTime = 1432771882000;
+    var fromTime = 1435300258000;
+    var toTime = 1435303258000;
 
-    GpsLogService.getLogsTill(1, toTime).success(function (logs) {
+    GpsLogService.getLogsForInterval(2, fromTime, toTime).success(function (logs) {
       $scope.ind = 0;
       if (logs.length > 0) {
         $scope.lastLocationTime = logs[logs.length - 1].time;
         var currentCoordinates = [logs[0].lat, logs[0].lon];
         $scope.currentCoordinatesLatLng = new google.maps.LatLng(currentCoordinates[0], currentCoordinates[1]);
-        var marker = new google.maps.Marker({
-            position: $scope.currentCoordinatesLatLng,
-            map: $scope.map,
-            icon: ConfigService.icon,
-            title: 'My Location'
-        });
         marker.setMap($scope.map);
         $interval(function () {
           var newCoordinate = logs[$scope.ind++];
           $scope.addNewCoordinate(newCoordinate);
-        }, 2000, logs.length);
+        }, 500, logs.length);
       }
     });
   }]);
