@@ -9,10 +9,11 @@
  */
 angular.module('seeMeApp')
   .controller('MainCtrl', ['$scope', '$interval', '$timeout', '$routeParams', 'GpsLogService', 'ConfigService',
-      'UtilityService', function ($scope, $interval, $timeout, $routeParams, GpsLogService, ConfigService, UtilityService) {
+      function ($scope, $interval, $timeout, $routeParams, GpsLogService, ConfigService) {
 
+    $scope.mapConfig = ConfigService.mapConfig;
     var marker = new google.maps.Marker({
-        icon: ConfigService.icon,
+        icon: $scope.mapConfig.icon,
         title: 'My Location'
     });
 
@@ -24,29 +25,28 @@ angular.module('seeMeApp')
           marker.setMap($scope.map);
       };
 
-    $scope.lastLocationTime = 0;
+    $scope.lastGpsData = {};
+    var retryInterval = 1;
+    $scope.locationChangedTime = 0;
     var deviceId = parseInt($routeParams.deviceId);
     if (deviceId != undefined && typeof deviceId == typeof 1) {
       var latestLogPoller = function () {
             GpsLogService.getLatestLog(deviceId)
                 .success (function (logs) {
-                    var lastGpsData = logs[0];
-                    if (lastGpsData.timeAsDate !==  $scope.lastLocationTime) {
-                      $scope.lastLocationTime = lastGpsData.timeAsDate;
-                      $scope.addNewCoordinate(lastGpsData);
+                    $scope.lastGpsData = logs[0];
+                    if ($scope.lastGpsData.timeAsDate !==  $scope.locationChangedTime) {
+                      $scope.locationChangedTime = $scope.lastGpsData.timeAsDate;
+                      $scope.addNewCoordinate($scope.lastGpsData);
                     }
-                    $timeout(latestLogPoller, 2000);
+                    retryInterval=1;
+                    $timeout(latestLogPoller, ConfigService.refreshInterval*1000);
                 }).error(function(data, status, headers, config) {
-                    $timeout(latestLogPoller, 10);
+                    if (retryInterval <= ConfigService.maxRetryInterval*1000) {
+                      retryInterval = retryInterval * 2;
+                    }
+                    $timeout(latestLogPoller, retryInterval);
                 });
           };
       latestLogPoller();
-      $scope.timeAgo = ""; // initialise the time variable
-      $scope.tickInterval = 1000 //ms
-      var tick = function() {
-          $scope.timeAgo = UtilityService.timeSince(new Date($scope.lastLocationTime)); // get the current time
-          $timeout(tick, $scope.tickInterval); // reset the timer
-      }
-      $timeout(tick, $scope.tickInterval);
     }
   }]);

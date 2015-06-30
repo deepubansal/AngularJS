@@ -2,9 +2,9 @@
 <div>
  <map ng-show="pathCoordinates.length > 0" center="{{pathCoordinates[pathCoordinates.length - 1]}}" zoom="15">
     <shape ng-if="pathCoordinates.length > 0" name="polyline" path="{{pathCoordinates}}" geodesic="true"
-    stroke-color="#FF0000" stroke-opacity="1.0" stroke-weight="2"> </shape>
+    stroke-color="{{mapConfig.color}}" stroke-opacity="{{mapConfig.opacity}}" stroke-weight="{{mapConfig.stroke}}"> </shape>
 
 </map>
-<span ng-if="timeAgo.length > 0"> Last updated {{timeAgo}} ago !</span>
-<standardInterval> </standardInterval>
+<span> Last updated <standard-interval since="locationChangedTime"></standard-interval> ago !</span>
+<gps-console gps-info="lastGpsData" />
 </div>

@@ -1,0 +1,52 @@
+<svg width="640" height="480" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+ <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+ <defs>
+  <radialGradient r="0.5" cy="0.5" cx="0.5" spreadMethod="pad" id="svg_1">
+   <stop offset="0" stop-opacity="0.992188" stop-color="#003200"/>
+   <stop offset="1" stop-opacity="0.992188" stop-color="#00bd00"/>
+   <stop offset="1" stop-opacity="0.992188" stop-color="#00bd00"/>
+   <stop offset="1" stop-opacity="0.992188" stop-color="#00bd00"/>
+   <stop offset="1" stop-opacity="0.992188" stop-color="#00bd00"/>
+  </radialGradient>
+  <radialGradient r="0.5" cy="0.5" cx="0.5" spreadMethod="pad" id="svg_3">
+   <stop offset="0.123596" stop-opacity="0.992188" stop-color="#003200"/>
+   <stop offset="0.272034" stop-opacity="0.988281" stop-color="#005000"/>
+   <stop offset="0.43219" stop-opacity="0.988281" stop-color="#006900"/>
+   <stop offset="0.584534" stop-opacity="0.988281" stop-color="#007b00"/>
+   <stop offset="0.787659" stop-opacity="0.988281" stop-color="#00a100"/>
+   <stop offset="0.889221" stop-opacity="0.988281" stop-color="#00ac00"/>
+   <stop offset="1" stop-opacity="0.992188" stop-color="#00bd00"/>
+   <stop offset="1" stop-opacity="0.992188" stop-color="#00bd00"/>
+   <stop offset="1" stop-opacity="0.992188" stop-color="#00bd00"/>
+   <stop offset="1" stop-opacity="0.992188" stop-color="#00bd00"/>
+  </radialGradient>
+  <radialGradient r="0.5" cy="0.5" cx="0.5" spreadMethod="pad" id="svg_4">
+   <stop offset="0" stop-opacity="0.992188" stop-color="#003200"/>
+   <stop offset="0.178284" stop-opacity="0.988281" stop-color="#005000"/>
+   <stop offset="0.43219" stop-opacity="0.988281" stop-color="#006900"/>
+   <stop offset="0.584534" stop-opacity="0.988281" stop-color="#007b00"/>
+   <stop offset="0.787659" stop-opacity="0.988281" stop-color="#00a100"/>
+   <stop offset="0.889221" stop-opacity="0.988281" stop-color="#00ac00"/>
+   <stop offset="1" stop-opacity="0.992188" stop-color="#00bd00"/>
+   <stop offset="1" stop-opacity="0.992188" stop-color="#00bd00"/>
+   <stop offset="1" stop-opacity="0.992188" stop-color="#00bd00"/>
+   <stop offset="1" stop-opacity="0.992188" stop-color="#00bd00"/>
+  </radialGradient>
+  <radialGradient r="0.5" cy="0.5" cx="0.5" spreadMethod="pad" id="svg_5">
+   <stop offset="0.002502" stop-opacity="0.988281" stop-color="#004b00"/>
+   <stop offset="0.178284" stop-opacity="0.988281" stop-color="#005000"/>
+   <stop offset="0.43219" stop-opacity="0.988281" stop-color="#006900"/>
+   <stop offset="0.584534" stop-opacity="0.988281" stop-color="#007b00"/>
+   <stop offset="0.787659" stop-opacity="0.988281" stop-color="#00a100"/>
+   <stop offset="0.889221" stop-opacity="0.988281" stop-color="#00ac00"/>
+   <stop offset="1" stop-opacity="0.992188" stop-color="#00bd00"/>
+   <stop offset="1" stop-opacity="0.992188" stop-color="#00bd00"/>
+   <stop offset="1" stop-opacity="0.992188" stop-color="#00bd00"/>
+   <stop offset="1" stop-opacity="0.992188" stop-color="#00bd00"/>
+  </radialGradient>
+ </defs>
+ <g>
+  <title>Layer 1</title>
+  <circle id="svg_2" r="96.607453" cy="162" cx="272" stroke-linecap="null" stroke-linejoin="round" stroke-dasharray="null" stroke-width="5" stroke="#000000" fill="url(#svg_5)"/>
+ </g>
+</svg>

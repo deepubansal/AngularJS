@@ -1,0 +1,36 @@
+<svg width="640" height="480" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+ <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+ <defs>
+  <radialGradient fy="0.5" fx="0.5" gradientTransform="translate(0.680357666015625,0) scale(-0.86,1)" r="1.111841" cy="0.261719" cx="0.365784" spreadMethod="pad" id="svg_1">
+   <stop offset="0" stop-opacity="0.996094" stop-color="#003c00"/>
+   <stop offset="1" stop-opacity="0.992188" stop-color="#00ff00"/>
+  </radialGradient>
+  <radialGradient gradientTransform="translate(0.051209716796874964,0) scale(0.8600000000000001,1)" r="1.111841" cy="0.261719" cx="0.365784" spreadMethod="pad" id="svg_3">
+   <stop offset="0" stop-opacity="0.996094" stop-color="#003c00"/>
+   <stop offset="1" stop-opacity="0.992188" stop-color="#00ff00"/>
+  </radialGradient>
+  <radialGradient spreadMethod="pad" id="svg_4">
+   <stop offset="0.010315" stop-opacity="0.996094" stop-color="#003c00"/>
+   <stop offset="1" stop-opacity="0.996094" stop-color="#00ff00"/>
+  </radialGradient>
+  <radialGradient spreadMethod="pad" id="svg_5">
+   <stop offset="0" stop-opacity="0.996094" stop-color="#003c00"/>
+   <stop offset="1" stop-opacity="0.996094" stop-color="#00ff00"/>
+  </radialGradient>
+  <radialGradient r="0.5" cy="0.5" cx="0.5" spreadMethod="pad" id="svg_6">
+   <stop offset="0" stop-opacity="0.996094" stop-color="#003c00"/>
+   <stop offset="1" stop-opacity="0.992188" stop-color="#00bd00"/>
+  </radialGradient>
+  <radialGradient r="0.5" cy="0.5" cx="0.5" spreadMethod="pad" id="svg_7">
+   <stop offset="0" stop-opacity="0.992188" stop-color="#003200"/>
+   <stop offset="1" stop-opacity="0.992188" stop-color="#00bd00"/>
+   <stop offset="1" stop-opacity="0.992188" stop-color="#00bd00"/>
+   <stop offset="1" stop-opacity="0.992188" stop-color="#00bd00"/>
+   <stop offset="1" stop-opacity="0.992188" stop-color="#00bd00"/>
+  </radialGradient>
+ </defs>
+ <g>
+  <title>Layer 1</title>
+  <path fill="url(#svg_7)" stroke="#000000" stroke-width="5" d="m272.63501,239.44812l62.855225,-110l62.858582,110l-125.713806,0z" id="svg_2" stroke-linejoin="round"/>
+ </g>
+</svg>

@@ -11,17 +11,22 @@ angular.module('seeMeApp')
   .controller('TestCtrl', ['$scope', '$interval', 'GpsLogService', 'ConfigService', function ($scope, $interval, GpsLogService, ConfigService) {
     $scope.pathCoordinates = [];
 
+    $scope.mapConfig = ConfigService.mapConfig;
     var marker = new google.maps.Marker({
-        icon: ConfigService.icon,
+        icon: $scope.mapConfig.stableIcon,
         title: 'My Location'
     });
 
     $scope.addNewCoordinate = function(newLog) {
         marker.setPosition({lat:newLog.lat, lng:newLog.lon});
+        var icon = marker.getIcon();
+        icon.rotation = (Math.round(parseFloat(newLog.dir)) + 180)%360;
+        marker.setIcon(icon);
         $scope.pathCoordinates.push([newLog.lat, newLog.lon]);
+        $scope.latestLog = newLog;
       };
 
-    var fromTime = 1435300258000;
+    var fromTime = 1435290258000;
     var toTime = 1435303258000;
 
     GpsLogService.getLogsForInterval(2, fromTime, toTime).success(function (logs) {
