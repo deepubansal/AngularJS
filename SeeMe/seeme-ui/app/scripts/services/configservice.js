@@ -21,24 +21,22 @@ angular.module('seeMeApp')
         mapConfig: {
           movingIcon : {
             path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
-            scale: 5,
+            scale: 4,
             strokeWeight: 2.5,
-            anchor: new google.maps.Point(0, -4),
-            fillColor: '#008800',
+            anchor: new google.maps.Point(0, -2),
             fillOpacity: 1,
             strokeColor:'#000000'
           },
           stableIcon : {
             path:google.maps.SymbolPath.CIRCLE,
-            scale: 5,
+            scale: 6,
             strokeWeight: 2.5,
-            fillColor: '#008800',
             fillOpacity: 1,
             strokeColor:'#000000'
           },
-          stroke: 5,
-          color: '#008800',
+          weight: 5,
           opacity: 1.0
-        }
+        },
+        movingTimer: 5000
       };
   }]);

@@ -1,8 +1,8 @@
 <div>
- <map center="{{pathCoordinates[pathCoordinates.length - 1]}}" zoom="15">
-    <shape ng-if="pathCoordinates.length > 0" name="polyline" path="{{pathCoordinates}}" geodesic="true"
-    stroke-color="{{mapConfig.color}}" stroke-opacity="{{mapConfig.opacity}}" stroke-weight="{{mapConfig.stroke}}"> </shape>
+  <map center="[28.73,77.15]" zoom="14">
+    <user-path ng-repeat="user in  users" user-obj="user" opacity="opacity" weight="weight"/>
 
-</map>
-<gps-console gps-info="latestLog" />
+  </map>
+
+  <gps-console ng-repeat="user in users" gps-info="user.lastLog" />
 </div>

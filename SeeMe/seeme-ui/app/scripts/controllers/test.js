@@ -8,38 +8,32 @@
  * Controller of the seeMeApp
  */
 angular.module('seeMeApp')
-  .controller('TestCtrl', ['$scope', '$interval', 'GpsLogService', 'ConfigService', function ($scope, $interval, GpsLogService, ConfigService) {
-    $scope.pathCoordinates = [];
+  .controller('TestCtrl', ['$scope', '$interval', 'GpsLogService', 'User', 'ConfigService', function ($scope, $interval, GpsLogService, User, ConfigService) {
 
-    $scope.mapConfig = ConfigService.mapConfig;
-    var marker = new google.maps.Marker({
-        icon: $scope.mapConfig.stableIcon,
-        title: 'My Location'
-    });
-
-    $scope.addNewCoordinate = function(newLog) {
-        marker.setPosition({lat:newLog.lat, lng:newLog.lon});
-        var icon = marker.getIcon();
-        icon.rotation = (Math.round(parseFloat(newLog.dir)) + 180)%360;
-        marker.setIcon(icon);
-        $scope.pathCoordinates.push([newLog.lat, newLog.lon]);
-        $scope.latestLog = newLog;
+    // var fromTime = 1435296165000;
+    // var toTime =   1435303258000;
+    var fromTime = 1434878141000;
+    var toTime = 1434879041000;
+    var user1 = new User('deepu.bansal@gmail.com','Deepak', '#008800', 1);
+    var user2 = new User('dl****4@gmail.com','Car', '#000088', 2);
+    $scope.users = [user1, user2];
+    var createProcessLogsFunction = function(user) {
+      return function (logs) {
+        if (logs.length > 0) {
+          var index = 0;
+          user.createPathOnMap($scope.map);
+          $interval(function () {
+            var newLog = logs[index++];
+            user.addNewLog(newLog);
+          }, 500, logs.length);
+        }
       };
+    };
 
-    var fromTime = 1435290258000;
-    var toTime = 1435303258000;
-
-    GpsLogService.getLogsForInterval(2, fromTime, toTime).success(function (logs) {
-      $scope.ind = 0;
-      if (logs.length > 0) {
-        $scope.lastLocationTime = logs[logs.length - 1].time;
-        var currentCoordinates = [logs[0].lat, logs[0].lon];
-        $scope.currentCoordinatesLatLng = new google.maps.LatLng(currentCoordinates[0], currentCoordinates[1]);
-        marker.setMap($scope.map);
-        $interval(function () {
-          var newCoordinate = logs[$scope.ind++];
-          $scope.addNewCoordinate(newCoordinate);
-        }, 500, logs.length);
-      }
-    });
+    $scope.opacity=ConfigService.mapConfig.opacity;
+    $scope.weight=ConfigService.mapConfig.weight;
+    for (var i = $scope.users.length - 1; i >= 0; i--) {
+      GpsLogService.getLogsForInterval($scope.users[i].deviceId, fromTime, toTime)
+        .success(createProcessLogsFunction($scope.users[i]));
+    }
   }]);
