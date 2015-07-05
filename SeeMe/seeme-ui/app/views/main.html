@@ -1,10 +1,11 @@
 
 <div>
- <map ng-show="pathCoordinates.length > 0" center="{{pathCoordinates[pathCoordinates.length - 1]}}" zoom="15">
-    <shape ng-if="pathCoordinates.length > 0" name="polyline" path="{{pathCoordinates}}" geodesic="true"
-    stroke-color="{{mapConfig.color}}" stroke-opacity="{{mapConfig.opacity}}" stroke-weight="{{mapConfig.stroke}}"> </shape>
+  <map zoom="14">
+    <user-path user-obj="user" opacity="opacity" weight="weight"/>
 
-</map>
-<span> Last updated <standard-interval since="locationChangedTime"></standard-interval> ago !</span>
-<gps-console gps-info="lastGpsData" />
+  </map>
+  <div class="row">
+    <user-console user-obj="user">
+    </user-console>
+  </div>
 </div>

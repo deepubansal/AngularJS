@@ -45,7 +45,12 @@ angular.module('seeMeApp')
         }
       }
       Path.prototype.addNewLog = function (newLog) {
-        this.marker.setPosition({ lat:newLog.lat, lng:newLog.lon });
+        var point = new google.maps.LatLng(parseFloat(newLog.lat),parseFloat(newLog.lon));
+        this.marker.setPosition(point);
+        var currentBounds = this.map.getBounds() // get bounds of the map object's viewport
+        if(!currentBounds || !currentBounds.contains(point)){
+          this.map.setCenter(point);
+        }
         if (!this.pathCoordinates) {
           this.pathCoordinates = [];
         }

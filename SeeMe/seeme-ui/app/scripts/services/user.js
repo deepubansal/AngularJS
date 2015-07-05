@@ -24,8 +24,10 @@ angular.module('seeMeApp')
     };
 
     User.prototype.addNewLog  = function(newLog) {
-      this.lastLog = newLog;
-      this.path.addNewLog(newLog);
+      if (!this.lastLog || this.lastLog.timeAsDate !== newLog.timeAsDate) {
+        this.lastLog = newLog;
+        this.path.addNewLog(newLog);
+      }
     };
 
     return User;
