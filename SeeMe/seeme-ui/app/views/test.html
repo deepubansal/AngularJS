@@ -3,6 +3,8 @@
     <user-path ng-repeat="user in  users" user-obj="user" opacity="opacity" weight="weight"/>
 
   </map>
-
-  <gps-console ng-repeat="user in users" gps-info="user.lastLog" />
+  <div class="row">
+    <user-console ng-repeat="user in users" user-obj="user">
+    </user-console>
+  </div>
 </div>
