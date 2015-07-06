@@ -9,7 +9,7 @@
 angular.module('seeMeApp')
   .directive('userConsole', function () {
     return {
-      templateUrl: '../views/userconsole.html',
+      templateUrl: 'views/userconsole.html',
       restrict: 'E',
       scope: {
           user: '=userObj'

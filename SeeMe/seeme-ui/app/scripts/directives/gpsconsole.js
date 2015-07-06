@@ -9,7 +9,7 @@
 angular.module('seeMeApp')
   .directive('gpsConsole', function () {
     return {
-      templateUrl: '../views/gpsconsole.html',
+      templateUrl: 'views/gpsconsole.html',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
         scope.$watch(attrs.gpsInfo, function(value) {

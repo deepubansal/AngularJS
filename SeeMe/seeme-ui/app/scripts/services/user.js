@@ -20,7 +20,8 @@ angular.module('seeMeApp')
     }
 
     User.prototype.createPathOnMap = function(map) {
-      this.path = new Path(this.name, this.color, map);
+      if (!this.path)
+        this.path = new Path(this.name, this.color, map);
     };
 
     User.prototype.addNewLog  = function(newLog) {
