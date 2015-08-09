@@ -72,12 +72,12 @@ module.exports = function (grunt) {
       options: {
         port: 9000,
         // Change this to '0.0.0.0' to access the server from outside.
-        hostname: 'localhost',
+        hostname: '0.0.0.0',
         livereload: 35729
       },
       proxies: [{
          context: '/rest/', // the api pattern you need to proxy(i am going to proxyall the requests that are having a path as /rest)
-         host: 'localhost', // the backend server host ip
+         host: '10.0.2.2', // the backend server host ip
          port: 8181, // the backend server port
          rewrite: {
             '^/rest': '/seeme-1.0-SNAPSHOT/rest'
