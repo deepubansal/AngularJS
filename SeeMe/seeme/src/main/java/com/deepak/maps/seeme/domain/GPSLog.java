@@ -14,7 +14,10 @@ import com.deepak.maps.seeme.model.GPSInfo;
 
 public class GPSLog {
 
-	@NotNull
+	private static final String FORMAT_1 = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+	private static final String FORMAT_2 = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+
+    @NotNull
 	private Double lat;
 	
 	@NotNull
@@ -122,18 +125,51 @@ public class GPSLog {
 		this.spd = spd;
 	}
 	public Date getTimeAsDate() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'",
+		SimpleDateFormat sdf = new SimpleDateFormat(FORMAT_1,
 				Locale.US);
 		sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
 		try {
 			return sdf.parse(time);
 		} catch (ParseException e) {
-			e.printStackTrace();
-			return null;
+		    e.printStackTrace();
+		    SimpleDateFormat sdf2 = new SimpleDateFormat(FORMAT_2,
+		            Locale.US);
+		    sdf2.setTimeZone(TimeZone.getTimeZone("UTC"));
+	        try {
+	            return sdf2.parse(time);
+	        } catch (ParseException e2) {
+	            e2.printStackTrace();
+	            return null;
+	        }			
 		}
 		
 	}
 	
+	
+	   public static Date getTimeAsDate1( String time) {
+	        SimpleDateFormat sdf = new SimpleDateFormat(FORMAT_1,
+	                Locale.US);
+	        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+	        try {
+	            return sdf.parse(time);
+	        } catch (ParseException e) {
+	            e.printStackTrace();
+	            SimpleDateFormat sdf2 = new SimpleDateFormat(FORMAT_2,
+	                    Locale.US);
+	            sdf2.setTimeZone(TimeZone.getTimeZone("UTC"));
+	            try {
+	                return sdf2.parse(time);
+	            } catch (ParseException e2) {
+	                e2.printStackTrace();
+	                return null;
+	            }           
+	        }
+	        
+	    }
+	   
+	   public static void main(String[] args) {
+        System.out.println(getTimeAsDate1("2017-02-14T18:58:56.289Z"));
+    }
 	public String getTime() {
 		return time;
 	}
@@ -260,7 +296,7 @@ public class GPSLog {
 	}
 
 	public void setTimeFromDate(Date d) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'",
+		SimpleDateFormat sdf = new SimpleDateFormat(FORMAT_1,
 				Locale.US);
 		sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
 		this.time = sdf.format(d);
